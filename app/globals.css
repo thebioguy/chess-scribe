@@ -1,5 +1,22 @@
-import './globals.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-export default function AppPage() {
-  return <div>App shell</div>;
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: #020617;
+  color: #f1f5f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
