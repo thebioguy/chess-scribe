@@ -161,7 +161,7 @@ export default function Page() {
                 <FileImage size={16} className="text-brand-300" /> Scoresheet review
               </div>
               <div className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald-300">
-                {profile.corrections ? 'Profile active' : 'New user'}
+                {profile.corrections && Object.keys(profile.corrections).length > 3 ? 'Profile active' : 'New user'}
               </div>
             </div>
 
@@ -213,14 +213,14 @@ export default function Page() {
                   <button
                     type="button"
                     onClick={() => navigator.clipboard.writeText(exportPgn(moves))}
-                    className="rounded-lg border border-slate-700 bg-slate-900 px-2 py-1 text-xs text-slate-200"
+                    className="rounded-lg border border-slate-700 bg-slate-900 px-2 py-1 text-xs text-slate-200 hover:border-emerald-600 hover:bg-slate-800"
                   >
                     PGN
                   </button>
                   <button
                     type="button"
                     onClick={() => navigator.clipboard.writeText(exportFen(moves))}
-                    className="rounded-lg border border-slate-700 bg-slate-900 px-2 py-1 text-xs text-slate-200"
+                    className="rounded-lg border border-slate-700 bg-slate-900 px-2 py-1 text-xs text-slate-200 hover:border-emerald-600 hover:bg-slate-800"
                   >
                     FEN
                   </button>
@@ -234,11 +234,11 @@ export default function Page() {
               <div className="mb-4 flex items-center gap-2 text-sm text-slate-300">
                 <Shield size={16} className="text-emerald-300" /> Status
               </div>
-              <p className="text-sm text-slate-300">{status}</p>
+              <p className="text-sm leading-relaxed text-slate-300">{status}</p>
             </div>
 
             <div className="rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
-              <div className="mb-4 text-sm text-slate-300">Move list</div>
+              <div className="mb-4 text-sm font-medium text-slate-300">Move list</div>
               <div className="max-h-[420px] space-y-2 overflow-auto">
                 {moves.length ? (
                   moves.map((move, index) => (
@@ -253,12 +253,10 @@ export default function Page() {
                           : 'border-slate-800 bg-slate-950 text-slate-300 hover:border-slate-600'
                       ].join(' ')}
                     >
-                      <span>
-                        {index + 1}. {move.original || move.corrected}
+                      <span className="font-mono">
+                        {Math.floor(index / 2) + 1}{index % 2 === 0 ? '.' : '...'} {move.original || move.corrected}
                       </span>
-                      <span className={move.legal ? 'text-emerald-300' : 'text-amber-300'}>
-                        {move.legal ? 'Legal' : 'Check'}
-                      </span>
+                      <span className={move.legal ? 'text-emerald-300' : 'text-amber-300'}>{move.legal ? '✓' : '!'}</span>
                     </button>
                   ))
                 ) : (
